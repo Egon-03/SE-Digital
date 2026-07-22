@@ -80,5 +80,3 @@ Navigazione: Home → Materia → Anno → Tipo di materiale → Elenco filtrabi
 
 - Login docenti reale, collezioni personali, upload diretto (brief §7).
 - Popolamento del Piano di Studio ufficiale oltre i dati d'esempio (brief §9).
-- Decisione definitiva sulla sezione Matematica (per ora rimanda a
-  [mama.edu.ti.ch](https://mama.edu.ti.ch), brief §8).

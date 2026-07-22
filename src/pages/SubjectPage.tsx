@@ -20,28 +20,6 @@ export function SubjectPage() {
         <h1 style={{ margin: 0 }}>{materia.nome}</h1>
       </div>
 
-      {materia.rimandaA && (
-        <div className="banner" role="note">
-          <div style={{ fontSize: "1.6rem" }} aria-hidden="true">
-            ↗
-          </div>
-          <div>
-            <p style={{ fontWeight: 700, marginBottom: "0.3rem" }}>
-              Per questa materia rimandiamo a {materia.rimandaA.nome}
-            </p>
-            <p style={{ marginBottom: "0.6rem" }}>{materia.rimandaA.motivo}</p>
-            <a
-              href={materia.rimandaA.url}
-              target="_blank"
-              rel="noreferrer"
-              className="btn btn-piccolo"
-            >
-              Vai al portale ↗
-            </a>
-          </div>
-        </div>
-      )}
-
       <h2>Scegli l’anno</h2>
       <ul className="griglia-scelte">
         {ANNI.map((anno) => {

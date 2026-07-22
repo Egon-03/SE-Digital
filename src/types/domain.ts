@@ -22,12 +22,6 @@ export interface Materia {
   anni: number[];
   /** true se la materia ha uno statuto particolare (facoltativa, ecc.) */
   facoltativa?: boolean;
-  /** Se impostato, la sezione rimanda a un portale esterno già maturo invece di materiali propri. */
-  rimandaA?: {
-    nome: string;
-    url: string;
-    motivo: string;
-  };
 }
 
 export type Ciclo = 1 | 2;
