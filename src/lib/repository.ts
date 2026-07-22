@@ -127,13 +127,6 @@ async function salvaNuovoMateriale(nuovo: MaterialeDidattico): Promise<Materiale
   return nuovo;
 }
 
-export async function proporreMateriale(
-  proposta: NuovaPropostaMateriale,
-): Promise<MaterialeDidattico> {
-  const nuovo = creaMaterialeBase(`proposta-${Date.now()}`, proposta, []);
-  return salvaNuovoMateriale(nuovo);
-}
-
 const BUCKET_ALLEGATI = "materiali-allegati";
 
 /**
@@ -169,7 +162,6 @@ async function caricaFileAllegati(id: string, file: File[]): Promise<FileAllegat
   return risultati;
 }
 
-/** Come proporreMateriale, ma allega uno o più PDF caricati dall'utente. */
 export async function inserireMateriale(
   proposta: NuovaPropostaMateriale,
   file: File[],

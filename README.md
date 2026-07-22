@@ -19,12 +19,11 @@ Il sito è consultabile su `http://localhost:5173/SE-Digital/`.
 
 Senza alcuna configurazione aggiuntiva il sito funziona già, usando un
 "database" mock in `localStorage` (seminato con i dati d'esempio in
-`src/data/materiali.ts`): puoi proporre un materiale dal form pubblico e
-vederlo comparire nella coda di moderazione. "Inserisci materiale" (`/inserisci`)
-funziona allo stesso modo ma richiede anche un file PDF allegato; senza
-Supabase configurato il PDF viene salvato come data-URL in `localStorage`
-(limite ~4MB), con Supabase viene caricato sul bucket `materiali-allegati`
-(limite 20MB).
+`src/data/materiali.ts`): puoi proporre un materiale dal form pubblico
+"Proponi materiale" (`/inserisci`), allegando un file PDF, e vederlo
+comparire nella coda di moderazione. Senza Supabase configurato il PDF
+viene salvato come data-URL in `localStorage` (limite ~4MB), con Supabase
+viene caricato sul bucket `materiali-allegati` (limite 20MB).
 
 ## Collegare Supabase (opzionale)
 
@@ -32,7 +31,7 @@ Supabase configurato il PDF viene salvato come data-URL in `localStorage`
 2. Esegui le migration in `supabase/migrations/` in ordine (0001, poi 0002 —
    SQL Editor del progetto, oppure `supabase db push` con la CLI ufficiale).
    La 0002 crea il bucket di storage `materiali-allegati` usato da
-   "Inserisci materiale" per i PDF caricati.
+   "Proponi materiale" per i PDF caricati.
 3. Copia `.env.example` in `.env.local` e compila:
    - `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` (Impostazioni progetto → API)
    - `VITE_MODERATION_PASSWORD`, la password condivisa per `/moderazione`
@@ -85,7 +84,7 @@ Navigazione: Home → Materia → Anno → Tipo di materiale → Elenco filtrabi
 ## Cosa manca (fase 2, non bloccante)
 
 - Login docenti reale, collezioni personali (brief §7). L'upload diretto dei
-  PDF ("Inserisci materiale") è già disponibile, ma resta aperto a chiunque
-  come "Proponi materiale" — vedi nota di sicurezza in
+  PDF tramite "Proponi materiale" è già disponibile, ma resta aperto a
+  chiunque — vedi nota di sicurezza in
   `supabase/migrations/0002_storage_allegati.sql`.
 - Popolamento del Piano di Studio ufficiale oltre i dati d'esempio (brief §9).
