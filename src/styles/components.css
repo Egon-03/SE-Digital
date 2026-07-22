@@ -416,6 +416,68 @@
   gap: 0.3rem;
 }
 
+/* Generatori di esercizi (Italiano) */
+.lista-esercizi-verticale {
+  grid-template-columns: 1fr;
+}
+
+.esercizio-opzioni {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.select-analisi {
+  font: inherit;
+  padding: 0.3em 0.5em;
+  border: 2px solid var(--bordo);
+  border-radius: var(--raggio-piccolo);
+  background: var(--bianco-carta);
+  color: var(--inchiostro);
+}
+
+.testo-dettato-box {
+  border: 2px solid var(--bordo);
+  border-radius: var(--raggio);
+  padding: 1rem 1.2rem;
+  background: var(--carta-alta);
+  margin-bottom: 1rem;
+}
+
+.banca-parole {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--inchiostro-tenue);
+  margin-bottom: 1rem;
+}
+
+.testo-bucato {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  line-height: 2.4;
+}
+
+.lacuna-input {
+  width: 8rem;
+  font: inherit;
+  padding: 0.1em 0.4em;
+  border: 0;
+  border-bottom: 2px solid var(--bordo);
+  background: transparent;
+  color: var(--inchiostro);
+  margin: 0 0.2rem;
+}
+
+.parola-evidenziata {
+  text-decoration: underline;
+  text-decoration-color: var(--senape);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 3px;
+}
+
 @media print {
   .header,
   .footer,
