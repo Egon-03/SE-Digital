@@ -2,7 +2,6 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { trovaMateria } from "../data/materie";
 import { TIPI_MATERIALE_INFO } from "../data/tipiMateriale";
 import { Breadcrumb } from "../components/Breadcrumb";
-import { TipoIcon } from "../components/icons/TipoIcon";
 
 export function YearPage() {
   const { materiaSlug = "", anno = "" } = useParams();
@@ -32,7 +31,6 @@ export function YearPage() {
               to={`/materia/${materia.slug}/anno/${annoNum}/tipo/${tipo.slug}`}
               className="scelta"
             >
-              <TipoIcon slug={tipo.slug} size={30} style={{ color: "var(--terracotta)" }} />
               <span>
                 <span className="scelta-titolo">{tipo.nome}</span>
                 <span className="scelta-nota">{tipo.descrizione}</span>
