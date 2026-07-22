@@ -2,7 +2,7 @@ import type { MaterialeDidattico } from "../types/domain";
 
 const FILE_DEMO = {
   nome: "materiale-esempio.pdf",
-  url: "/se-digital/demo/materiale-esempio.pdf",
+  url: `${import.meta.env.BASE_URL}demo/materiale-esempio.pdf`,
   formato: "pdf" as const,
   dimensioneKb: 42,
 };

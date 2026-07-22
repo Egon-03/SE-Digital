@@ -15,7 +15,7 @@ npm install
 npm run dev
 ```
 
-Il sito è consultabile su `http://localhost:5173/se-digital/`.
+Il sito è consultabile su `http://localhost:5173/SE-Digital/`.
 
 Senza alcuna configurazione aggiuntiva il sito funziona già, usando un
 "database" mock in `localStorage` (seminato con i dati d'esempio in
@@ -45,7 +45,7 @@ autenticazione reale (Supabase Auth + ruoli) è previsto in fase 2.
 ## Pubblicazione su GitHub Pages
 
 Il workflow `.github/workflows/deploy.yml` builda e pubblica il sito a ogni
-push su `main`, su `https://<utente>.github.io/se-digital/`.
+push su `main`, su `https://<utente>.github.io/SE-Digital/`.
 
 Per attivarlo:
 
@@ -55,7 +55,7 @@ Per attivarlo:
    Secrets and variables → Actions): `VITE_SUPABASE_URL`,
    `VITE_SUPABASE_ANON_KEY`, `VITE_MODERATION_PASSWORD`.
 
-`vite.config.ts` ha già `base: '/se-digital/'` impostato per servire
+`vite.config.ts` ha già `base: '/SE-Digital/'` impostato per servire
 correttamente asset e router sotto quel percorso.
 
 ## Struttura del progetto
