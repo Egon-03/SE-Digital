@@ -5,6 +5,14 @@ import { TIPI_MATERIALE_INFO } from "../data/tipiMateriale";
 import { inserireMateriale, LIMITE_DIMENSIONE_FILE_MB } from "../lib/repository";
 import type { MateriaSlug, MaterialeDidattico, TipoMateriale } from "../types/domain";
 
+/** Gli errori di Supabase (Postgrest, Storage) sono oggetti semplici con
+ * `.message`, non istanze di Error: va gestito anche quel caso. */
+function messaggioErrore(err: unknown): string {
+  if (err instanceof Error) return err.message;
+  if (err && typeof err === "object" && "message" in err) return String((err as { message: unknown }).message);
+  return String(err);
+}
+
 export function InsertMaterialPage() {
   const [materia, setMateria] = useState<MateriaSlug>(MATERIE[0].slug);
   const [anniSelezionati, setAnniSelezionati] = useState<number[]>([]);
@@ -98,8 +106,7 @@ export function InsertMaterialPage() {
       );
       setCreato(nuovo);
     } catch (err) {
-      const dettaglio = err instanceof Error ? err.message : String(err);
-      setErrore(`Non è stato possibile caricare il materiale: ${dettaglio}`);
+      setErrore(`Non è stato possibile caricare il materiale: ${messaggioErrore(err)}`);
     } finally {
       setInviando(false);
     }
