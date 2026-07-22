@@ -13,6 +13,11 @@ import { NotFoundPage } from "./pages/NotFoundPage";
 import { GeneratoriMatematicaPage } from "./pages/generatori/GeneratoriMatematicaPage";
 import { GeneratoreOperazioniPage } from "./pages/generatori/GeneratoreOperazioniPage";
 import { GeneratoreOrologioPage } from "./pages/generatori/GeneratoreOrologioPage";
+import { GeneratoriItalianoPage } from "./pages/generatori/GeneratoriItalianoPage";
+import { GeneratoreOrtografiaPage } from "./pages/generatori/GeneratoreOrtografiaPage";
+import { GeneratoreDettatoPage } from "./pages/generatori/GeneratoreDettatoPage";
+import { GeneratoreTestoBucatoPage } from "./pages/generatori/GeneratoreTestoBucatoPage";
+import { GeneratoreAnalisiGrammaticalePage } from "./pages/generatori/GeneratoreAnalisiGrammaticalePage";
 
 function App() {
   return (
@@ -33,6 +38,23 @@ function App() {
           <Route
             path="/materia/matematica/generatori/orologio"
             element={<GeneratoreOrologioPage />}
+          />
+          <Route path="/materia/italiano/generatori" element={<GeneratoriItalianoPage />} />
+          <Route
+            path="/materia/italiano/generatori/ortografia"
+            element={<GeneratoreOrtografiaPage />}
+          />
+          <Route
+            path="/materia/italiano/generatori/dettato"
+            element={<GeneratoreDettatoPage />}
+          />
+          <Route
+            path="/materia/italiano/generatori/testo-bucato"
+            element={<GeneratoreTestoBucatoPage />}
+          />
+          <Route
+            path="/materia/italiano/generatori/analisi-grammaticale"
+            element={<GeneratoreAnalisiGrammaticalePage />}
           />
           <Route path="/materia/:materiaSlug/anno/:anno" element={<YearPage />} />
           <Route path="/materia/:materiaSlug/anno/:anno/tipo/:tipo" element={<TypePage />} />
