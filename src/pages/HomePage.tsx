@@ -15,7 +15,7 @@ export function HomePage() {
           <a href="#materie" className="btn btn-primario">
             Esplora le materie
           </a>
-          <Link to="/proponi" className="btn">
+          <Link to="/inserisci" className="btn">
             Proponi un materiale
           </Link>
         </div>
