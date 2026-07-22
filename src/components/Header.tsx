@@ -11,14 +11,9 @@ export function Header() {
             <small>Hub didattico — scuola elementare, Ticino</small>
           </span>
         </Link>
-        <div style={{ display: "flex", gap: "0.6rem" }}>
-          <Link to="/proponi" className="btn btn-piccolo">
-            Proponi materiale
-          </Link>
-          <Link to="/inserisci" className="btn btn-primario btn-piccolo">
-            Inserisci materiale
-          </Link>
-        </div>
+        <Link to="/inserisci" className="btn btn-primario btn-piccolo">
+          Proponi materiale
+        </Link>
       </div>
     </header>
   );
