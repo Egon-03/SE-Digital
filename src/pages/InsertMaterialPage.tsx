@@ -97,8 +97,9 @@ export function InsertMaterialPage() {
         file,
       );
       setCreato(nuovo);
-    } catch {
-      setErrore("Non è stato possibile caricare il materiale. Riprova più tardi.");
+    } catch (err) {
+      const dettaglio = err instanceof Error ? err.message : String(err);
+      setErrore(`Non è stato possibile caricare il materiale: ${dettaglio}`);
     } finally {
       setInviando(false);
     }
