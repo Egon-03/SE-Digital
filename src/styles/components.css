@@ -333,6 +333,104 @@
   overflow-wrap: break-word;
 }
 
+/* Generatori di esercizi (Matematica) — schede a schermo e stampabili */
+.riga-intestazione-stampa {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+}
+
+.riga-da-compilare {
+  display: inline-block;
+  width: 8rem;
+  border-bottom: 1.5px solid var(--inchiostro);
+  margin-right: 1.2rem;
+}
+
+.lista-esercizi {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.9rem 1.5rem;
+}
+
+.esercizio-riga {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  font-family: var(--serif);
+  font-size: 1.15rem;
+}
+
+.esercizio-risposta input,
+.orologio-risposta input {
+  width: 4.2rem;
+  font: inherit;
+  padding: 0.3em 0.5em;
+  border: 2px solid var(--bordo);
+  border-radius: var(--raggio-piccolo);
+  background: var(--bianco-carta);
+  color: var(--inchiostro);
+}
+
+.esito-riga {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.esito-corretto { color: var(--verde-scuro); }
+.esito-errato { color: var(--terracotta-scuro); }
+
+.griglia-orologi {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1.5rem;
+}
+
+.orologio-riga {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.orologio-risposta {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+@media print {
+  .header,
+  .footer,
+  .skip-link,
+  .no-stampa,
+  .breadcrumb {
+    display: none !important;
+  }
+
+  html,
+  body,
+  .container {
+    background: white;
+    color: black;
+  }
+
+  .scheda-stampa {
+    margin-top: 0;
+  }
+}
+
 /* Footer */
 .footer {
   border-top: 3px solid var(--bordo);

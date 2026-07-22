@@ -20,6 +20,32 @@ export function SubjectPage() {
         <h1 style={{ margin: 0 }}>{materia.nome}</h1>
       </div>
 
+      {materia.slug === "matematica" && (
+        <div className="banner" role="note">
+          <svg width="32" height="32" viewBox="0 0 40 40" aria-hidden="true" style={{ flexShrink: 0 }}>
+            <rect x="1" y="1" width="38" height="38" rx="8" fill="var(--senape)" />
+            <path
+              d="M13 20h14M20 13v14"
+              stroke="var(--bianco-carta)"
+              strokeWidth="3.4"
+              strokeLinecap="round"
+            />
+          </svg>
+          <div>
+            <p style={{ fontWeight: 700, marginBottom: "0.3rem" }}>
+              Generatori di esercizi
+            </p>
+            <p style={{ marginBottom: "0.6rem" }}>
+              Crea al volo schede di operazioni o di lettura dell'orologio, da svolgere a
+              schermo o da stampare.
+            </p>
+            <Link to="/materia/matematica/generatori" className="btn btn-piccolo">
+              Vai ai generatori
+            </Link>
+          </div>
+        </div>
+      )}
+
       <h2>Scegli l’anno</h2>
       <ul className="griglia-scelte">
         {ANNI.map((anno) => {

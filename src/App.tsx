@@ -9,6 +9,9 @@ import { MaterialDetailPage } from "./pages/MaterialDetailPage";
 import { ProposeMaterialPage } from "./pages/ProposeMaterialPage";
 import { ModerationPage } from "./pages/ModerationPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
+import { GeneratoriMatematicaPage } from "./pages/generatori/GeneratoriMatematicaPage";
+import { GeneratoreOperazioniPage } from "./pages/generatori/GeneratoreOperazioniPage";
+import { GeneratoreOrologioPage } from "./pages/generatori/GeneratoreOrologioPage";
 
 function App() {
   return (
@@ -21,6 +24,15 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/materia/:materiaSlug" element={<SubjectPage />} />
+          <Route path="/materia/matematica/generatori" element={<GeneratoriMatematicaPage />} />
+          <Route
+            path="/materia/matematica/generatori/operazioni"
+            element={<GeneratoreOperazioniPage />}
+          />
+          <Route
+            path="/materia/matematica/generatori/orologio"
+            element={<GeneratoreOrologioPage />}
+          />
           <Route path="/materia/:materiaSlug/anno/:anno" element={<YearPage />} />
           <Route path="/materia/:materiaSlug/anno/:anno/tipo/:tipo" element={<TypePage />} />
           <Route path="/materiale/:id" element={<MaterialDetailPage />} />
