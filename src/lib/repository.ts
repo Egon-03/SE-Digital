@@ -40,6 +40,69 @@ function saveLocal(materiali: MaterialeDidattico[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(materiali));
 }
 
+/**
+ * Lo schema SQL (supabase/migrations/0001_init.sql) usa colonne snake_case
+ * e appiattisce il collegamento al PdS (pds_area_disciplinare, ecc.), mentre
+ * il modello dati JS (src/types/domain.ts) è camelCase con `pds` annidato.
+ * Queste due funzioni fanno da confine di conversione verso/da Supabase.
+ */
+function aRigaDb(m: MaterialeDidattico) {
+  return {
+    id: m.id,
+    titolo: m.titolo,
+    descrizione_breve: m.descrizioneBreve,
+    materia: m.materia,
+    anni: m.anni,
+    tipo: m.tipo,
+    pds_area_disciplinare: m.pds.areaDisciplinare,
+    pds_disciplina: m.pds.disciplina,
+    pds_ciclo: m.pds.ciclo,
+    pds_ambito_competenza: m.pds.ambitoCompetenza,
+    pds_traguardo_competenza: m.pds.traguardoCompetenza,
+    pds_traguardo_specifico: m.pds.traguardoSpecifico,
+    tag_liberi: m.tagLiberi,
+    tag_formazione_generale: m.tagFormazioneGenerale,
+    tag_competenze_trasversali: m.tagCompetenzeTrasversali,
+    file_allegati: m.fileAllegati,
+    autore_nome: m.autoreNome,
+    autore_id: m.autoreId,
+    data_creazione: m.dataCreazione,
+    data_modifica: m.dataModifica,
+    stato: m.stato,
+    licenza: m.licenza,
+  };
+}
+
+function daRigaDb(r: Record<string, unknown>): MaterialeDidattico {
+  return {
+    id: r.id as string,
+    titolo: r.titolo as string,
+    descrizioneBreve: r.descrizione_breve as string,
+    materia: r.materia as MateriaSlug,
+    anni: r.anni as number[],
+    tipo: r.tipo as TipoMateriale,
+    pds: {
+      areaDisciplinare: r.pds_area_disciplinare as string,
+      disciplina: r.pds_disciplina as string,
+      ciclo: r.pds_ciclo as 1 | 2,
+      ambitoCompetenza: r.pds_ambito_competenza as string,
+      traguardoCompetenza: r.pds_traguardo_competenza as string,
+      traguardoSpecifico: r.pds_traguardo_specifico as string,
+    },
+    tagLiberi: (r.tag_liberi as string[]) ?? [],
+    tagFormazioneGenerale: (r.tag_formazione_generale as string[]) ?? [],
+    tagCompetenzeTrasversali: (r.tag_competenze_trasversali as string[]) ?? [],
+    fileAllegati: (r.file_allegati as FileAllegato[]) ?? [],
+    autoreNome: r.autore_nome as string,
+    autoreId: r.autore_id as string | null,
+    dataCreazione: r.data_creazione as string,
+    dataModifica: r.data_modifica as string,
+    stato: r.stato as MaterialeDidattico["stato"],
+    licenza: r.licenza as string,
+    contatoreDownload: r.contatore_download as number | undefined,
+  };
+}
+
 function corrisponde(m: MaterialeDidattico, f: FiltriMateriali): boolean {
   if (f.materia && m.materia !== f.materia) return false;
   if (f.anno && !m.anni.includes(f.anno)) return false;
@@ -61,7 +124,7 @@ export async function getMaterialiApprovati(
     if (filtri.tipo) query = query.eq("tipo", filtri.tipo);
     const { data, error } = await query;
     if (error) throw error;
-    let risultati = (data ?? []) as MaterialeDidattico[];
+    let risultati = (data ?? []).map(daRigaDb);
     if (filtri.anno) risultati = risultati.filter((m) => m.anni.includes(filtri.anno!));
     if (filtri.testo) risultati = risultati.filter((m) => corrisponde(m, filtri));
     return risultati;
@@ -76,7 +139,7 @@ export async function getMaterialeById(id: string): Promise<MaterialeDidattico |
   if (isSupabaseConfigured && supabase) {
     const { data, error } = await supabase.from("materiali").select("*").eq("id", id).single();
     if (error) return undefined;
-    return data as MaterialeDidattico;
+    return daRigaDb(data);
   }
   return loadLocal().find((m) => m.id === id);
 }
@@ -116,9 +179,9 @@ function creaMaterialeBase(
 
 async function salvaNuovoMateriale(nuovo: MaterialeDidattico): Promise<MaterialeDidattico> {
   if (isSupabaseConfigured && supabase) {
-    const { data, error } = await supabase.from("materiali").insert(nuovo).select().single();
+    const { data, error } = await supabase.from("materiali").insert(aRigaDb(nuovo)).select().single();
     if (error) throw error;
-    return data as MaterialeDidattico;
+    return daRigaDb(data);
   }
 
   const attuali = loadLocal();
@@ -179,7 +242,7 @@ export async function getMaterialiInRevisione(): Promise<MaterialeDidattico[]> {
       .select("*")
       .eq("stato", "in_revisione");
     if (error) throw error;
-    return (data ?? []) as MaterialeDidattico[];
+    return (data ?? []).map(daRigaDb);
   }
   return loadLocal().filter((m) => m.stato === "in_revisione");
 }
