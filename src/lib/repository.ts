@@ -1,6 +1,7 @@
 import { supabase, isSupabaseConfigured } from "./supabaseClient";
 import { MATERIALI } from "../data/materiali";
 import type {
+  FileAllegato,
   MaterialeDidattico,
   MateriaSlug,
   TipoMateriale,
@@ -80,11 +81,13 @@ export async function getMaterialeById(id: string): Promise<MaterialeDidattico |
   return loadLocal().find((m) => m.id === id);
 }
 
-export async function proporreMateriale(
+function creaMaterialeBase(
+  id: string,
   proposta: NuovaPropostaMateriale,
-): Promise<MaterialeDidattico> {
-  const nuovo: MaterialeDidattico = {
-    id: `proposta-${Date.now()}`,
+  fileAllegati: FileAllegato[],
+): MaterialeDidattico {
+  return {
+    id,
     titolo: proposta.titolo,
     descrizioneBreve: proposta.descrizioneBreve,
     materia: proposta.materia,
@@ -101,7 +104,7 @@ export async function proporreMateriale(
     tagLiberi: [],
     tagFormazioneGenerale: [],
     tagCompetenzeTrasversali: [],
-    fileAllegati: [],
+    fileAllegati,
     autoreNome: proposta.autoreNome,
     autoreId: null,
     dataCreazione: new Date().toISOString().slice(0, 10),
@@ -109,7 +112,9 @@ export async function proporreMateriale(
     stato: "in_revisione",
     licenza: "CC BY-NC 4.0",
   };
+}
 
+async function salvaNuovoMateriale(nuovo: MaterialeDidattico): Promise<MaterialeDidattico> {
   if (isSupabaseConfigured && supabase) {
     const { data, error } = await supabase.from("materiali").insert(nuovo).select().single();
     if (error) throw error;
@@ -120,6 +125,59 @@ export async function proporreMateriale(
   const aggiornati = [...attuali, nuovo];
   saveLocal(aggiornati);
   return nuovo;
+}
+
+export async function proporreMateriale(
+  proposta: NuovaPropostaMateriale,
+): Promise<MaterialeDidattico> {
+  const nuovo = creaMaterialeBase(`proposta-${Date.now()}`, proposta, []);
+  return salvaNuovoMateriale(nuovo);
+}
+
+const BUCKET_ALLEGATI = "materiali-allegati";
+
+/**
+ * Limite lato client: senza Supabase i file finiscono come data-URL in
+ * localStorage (quota tipica del browser ~5-10MB per origine), quindi il
+ * tetto in modalità demo è molto più basso che con lo storage reale.
+ */
+export const LIMITE_DIMENSIONE_FILE_MB = isSupabaseConfigured ? 20 : 4;
+
+function leggiComeDataUrl(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
+}
+
+async function caricaFileAllegati(id: string, file: File[]): Promise<FileAllegato[]> {
+  const risultati: FileAllegato[] = [];
+  for (const f of file) {
+    if (isSupabaseConfigured && supabase) {
+      const percorso = `${id}/${Date.now()}-${f.name}`;
+      const { error } = await supabase.storage.from(BUCKET_ALLEGATI).upload(percorso, f);
+      if (error) throw error;
+      const { data } = supabase.storage.from(BUCKET_ALLEGATI).getPublicUrl(percorso);
+      risultati.push({ nome: f.name, url: data.publicUrl, formato: "pdf", dimensioneKb: Math.round(f.size / 1024) });
+    } else {
+      const url = await leggiComeDataUrl(f);
+      risultati.push({ nome: f.name, url, formato: "pdf", dimensioneKb: Math.round(f.size / 1024) });
+    }
+  }
+  return risultati;
+}
+
+/** Come proporreMateriale, ma allega uno o più PDF caricati dall'utente. */
+export async function inserireMateriale(
+  proposta: NuovaPropostaMateriale,
+  file: File[],
+): Promise<MaterialeDidattico> {
+  const id = `materiale-${Date.now()}`;
+  const fileAllegati = await caricaFileAllegati(id, file);
+  const nuovo = creaMaterialeBase(id, proposta, fileAllegati);
+  return salvaNuovoMateriale(nuovo);
 }
 
 export async function getMaterialiInRevisione(): Promise<MaterialeDidattico[]> {

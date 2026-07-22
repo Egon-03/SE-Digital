@@ -7,6 +7,7 @@ import { YearPage } from "./pages/YearPage";
 import { TypePage } from "./pages/TypePage";
 import { MaterialDetailPage } from "./pages/MaterialDetailPage";
 import { ProposeMaterialPage } from "./pages/ProposeMaterialPage";
+import { InsertMaterialPage } from "./pages/InsertMaterialPage";
 import { ModerationPage } from "./pages/ModerationPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { GeneratoriMatematicaPage } from "./pages/generatori/GeneratoriMatematicaPage";
@@ -37,6 +38,7 @@ function App() {
           <Route path="/materia/:materiaSlug/anno/:anno/tipo/:tipo" element={<TypePage />} />
           <Route path="/materiale/:id" element={<MaterialDetailPage />} />
           <Route path="/proponi" element={<ProposeMaterialPage />} />
+          <Route path="/inserisci" element={<InsertMaterialPage />} />
           <Route path="/moderazione" element={<ModerationPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

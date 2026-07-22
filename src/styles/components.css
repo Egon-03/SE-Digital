@@ -288,6 +288,12 @@
 
 .campo textarea { resize: vertical; min-height: 6rem; }
 
+.campo input[type="file"] {
+  font: inherit;
+  padding: 0.5em 0;
+  color: var(--inchiostro);
+}
+
 .checkbox-riga {
   display: flex;
   align-items: center;
