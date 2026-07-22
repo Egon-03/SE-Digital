@@ -1,0 +1,343 @@
+/* ------------------------------------------------------------------ */
+/* Primitive di interfaccia — bottoni, card, badge, form, navigazione  */
+/* ------------------------------------------------------------------ */
+
+/* Bottoni: bordo netto + ombra "dura" (offset, non sfocata) che si     */
+/* comprime al click, come un pulsante di carta pressato.              */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.7em 1.3em;
+  border-radius: var(--raggio-piccolo);
+  border: 2px solid var(--bordo);
+  cursor: pointer;
+  text-decoration: none;
+  background: var(--bianco-carta);
+  color: var(--inchiostro);
+  box-shadow: 3px 3px 0 var(--bordo);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  touch-action: manipulation;
+}
+
+.btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--bordo);
+}
+
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 var(--bordo);
+}
+
+.btn-primario {
+  background: var(--terracotta);
+  color: var(--bianco-carta);
+  border-color: var(--terracotta-scuro);
+  box-shadow: 3px 3px 0 var(--terracotta-scuro);
+}
+.btn-primario:hover { box-shadow: 4px 4px 0 var(--terracotta-scuro); }
+.btn-primario:active { box-shadow: 0 0 0 var(--terracotta-scuro); }
+
+.btn-piccolo {
+  font-size: 0.85rem;
+  padding: 0.5em 1em;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Card: bordo netto, ombra dura, piccola "linguetta" decorativa in alto */
+/* a sinistra come un pezzetto di nastro di carta.                      */
+.card {
+  position: relative;
+  background: var(--bianco-carta);
+  border: 2px solid var(--bordo);
+  border-radius: var(--raggio);
+  box-shadow: 5px 5px 0 var(--ombra);
+  padding: 1.4rem;
+}
+
+.card-nastro::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 22px;
+  width: 44px;
+  height: 18px;
+  background: var(--senape);
+  border: 2px solid var(--bordo);
+  transform: rotate(-4deg);
+  border-radius: 2px;
+}
+
+.card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  touch-action: manipulation;
+}
+
+.clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: break-word;
+}
+.card-link:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--ombra);
+}
+.card-link:hover .card { box-shadow: none; }
+
+/* Badge / timbri */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.3em 0.7em;
+  border-radius: 999px;
+  border: 1.5px dashed var(--bordo);
+  white-space: nowrap;
+}
+
+.badge-ciclo-1 { background: rgba(62, 107, 82, 0.14); color: var(--verde-scuro); border-color: var(--verde); }
+.badge-ciclo-2 { background: rgba(61, 110, 147, 0.14); color: var(--blu); border-color: var(--blu); }
+.badge-stato-approvato { background: rgba(62, 107, 82, 0.14); color: var(--verde-scuro); border-color: var(--verde); }
+.badge-stato-in_revisione { background: rgba(220, 162, 58, 0.18); color: var(--senape-scuro); border-color: var(--senape); }
+.badge-stato-rifiutato { background: rgba(194, 74, 44, 0.14); color: var(--terracotta-scuro); border-color: var(--terracotta); }
+
+.tag {
+  display: inline-flex;
+  font-size: 0.82rem;
+  padding: 0.25em 0.6em;
+  border-radius: var(--raggio-piccolo);
+  background: var(--carta-alta);
+  border: 1px solid var(--inchiostro-tenue);
+  color: var(--inchiostro-tenue);
+}
+
+/* Intestazione del sito */
+.header {
+  border-bottom: 3px solid var(--bordo);
+  background: var(--carta);
+}
+
+.header-riga {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.9rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--inchiostro);
+}
+
+.logo-testo {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.1;
+}
+
+.logo-testo small {
+  display: block;
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 0.7rem;
+  color: var(--inchiostro-tenue);
+  text-transform: none;
+}
+
+/* Breadcrumb con freccette disegnate */
+.breadcrumb {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  font-size: 0.92rem;
+}
+
+.breadcrumb li { display: flex; align-items: center; gap: 0.4rem; }
+.breadcrumb li:not(:last-child)::after {
+  content: "〜";
+  color: var(--senape-scuro);
+  font-weight: 700;
+}
+.breadcrumb a {
+  color: var(--inchiostro-tenue);
+  text-decoration: none;
+  border-bottom: 1.5px dashed var(--inchiostro-tenue);
+}
+.breadcrumb a:hover { color: var(--terracotta-scuro); border-color: var(--terracotta-scuro); }
+.breadcrumb .attuale { font-weight: 700; color: var(--inchiostro); }
+
+/* Griglia di scelta (materie, anni, tipi) */
+.griglia-scelte {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.scelta {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1rem 1.1rem;
+  background: var(--bianco-carta);
+  border: 2px solid var(--bordo);
+  border-radius: var(--raggio);
+  text-decoration: none;
+  color: var(--inchiostro);
+  box-shadow: 4px 4px 0 var(--ombra);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  touch-action: manipulation;
+  min-width: 0;
+}
+
+.scelta:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ombra);
+}
+
+.scelta:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--ombra); }
+
+.scelta-titolo { font-family: var(--serif); font-weight: 600; font-size: 1.05rem; }
+.scelta-nota { font-size: 0.82rem; color: var(--inchiostro-tenue); }
+
+.scelta[aria-disabled="true"] {
+  opacity: 0.45;
+  box-shadow: none;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Stato vuoto */
+.stato-vuoto {
+  border: 2px dashed var(--inchiostro-tenue);
+  border-radius: var(--raggio);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  color: var(--inchiostro-tenue);
+}
+
+/* Banner informativo (es. rimando a MaMa) */
+.banner {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  background: var(--carta-alta);
+  border: 2px solid var(--senape);
+  border-radius: var(--raggio);
+  padding: 1.1rem 1.3rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Form */
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1.2rem;
+}
+
+.campo label {
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.campo .aiuto {
+  font-size: 0.82rem;
+  color: var(--inchiostro-tenue);
+}
+
+.campo input[type="text"],
+.campo input[type="password"],
+.campo textarea,
+.campo select {
+  font: inherit;
+  padding: 0.6em 0.75em;
+  border: 2px solid var(--bordo);
+  border-radius: var(--raggio-piccolo);
+  background: var(--bianco-carta);
+  color: var(--inchiostro);
+}
+
+.campo textarea { resize: vertical; min-height: 6rem; }
+
+.checkbox-riga {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 400;
+}
+
+.messaggio-esito {
+  border-radius: var(--raggio-piccolo);
+  border: 2px solid var(--verde);
+  background: rgba(62, 107, 82, 0.12);
+  color: var(--verde-scuro);
+  padding: 0.9rem 1.1rem;
+  font-weight: 600;
+}
+
+.messaggio-errore {
+  border-radius: var(--raggio-piccolo);
+  border: 2px solid var(--terracotta);
+  background: rgba(194, 74, 44, 0.1);
+  color: var(--terracotta-scuro);
+  padding: 0.9rem 1.1rem;
+  font-weight: 600;
+}
+
+/* Scheda informazioni (dl) nel dettaglio materiale */
+.scheda-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+  margin: 0;
+}
+.scheda-info dt {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--inchiostro-tenue);
+  font-weight: 700;
+}
+.scheda-info dd {
+  margin: 0;
+  font-family: var(--serif);
+  overflow-wrap: break-word;
+}
+
+/* Footer */
+.footer {
+  border-top: 3px solid var(--bordo);
+  margin-top: 4rem;
+  padding-block: 2rem;
+  color: var(--inchiostro-tenue);
+  font-size: 0.9rem;
+}
